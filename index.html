@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duck Duck Fight 🦆</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@400;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ── Reset ──────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Space Grotesk", sans-serif;
+      background: #FFFDF4;
+      color: #1a1a2e;
+      overflow-x: hidden;
+    }
+
+    /* ── Animations ────────────────────────────────── */
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+
+    @keyframes bob-flip {
+      0%, 100% { transform: translateY(0) scaleX(-1); }
+      50%      { transform: translateY(-10px) scaleX(-1); }
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0); }
+      70%  { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25%      { transform: translate(8px, -6px) rotate(5deg); }
+      50%      { transform: translate(-4px, -12px) rotate(-3deg); }
+      75%      { transform: translate(-8px, -4px) rotate(4deg); }
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(255, 217, 61, 0.2) 0%, transparent 60%),
+        #FFFDF4;
+    }
+
+    .hero-title {
+      font-family: "Bangers", cursive;
+      font-size: 5.5rem;
+      letter-spacing: 6px;
+      color: #1a1a2e;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title .word-duck { color: #B8860B; }
+    .hero-title .word-fight { color: #6D28D9; }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      font-weight: 700;
+      opacity: 0.5;
+      margin-bottom: 2.5rem;
+      letter-spacing: 2px;
+    }
+
+    /* ── Fight card ─────────────────────────────────── */
+    .fight-card {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .fight-duck {
+      font-size: 5rem;
+      line-height: 1;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .fight-duck:hover { transform: scale(1.2); }
+
+    .fight-duck--good { animation: bob 2s ease-in-out infinite; }
+    .fight-duck--evil { animation: bob-flip 2s ease-in-out infinite 0.3s; }
+
+    .fight-vs {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #FFD93D;
+      border: 5px solid #1a1a2e;
+      box-shadow: 5px 5px 0 #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: pop 0.6s ease-out both 0.3s;
+    }
+
+    .fight-vs .pan { font-size: 1.6rem; line-height: 1; }
+    .fight-vs .vs  {
+      font-family: "Bangers", cursive;
+      font-size: 1.3rem;
+      color: #1a1a2e;
+      letter-spacing: 2px;
+      margin-top: -2px;
+    }
+
+    /* ── Buttons ────────────────────────────────────── */
+    .btn-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      border-radius: 999px;
+      font-family: "Bangers", cursive;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      text-decoration: none;
+      color: #1a1a2e;
+      border: 4px solid #1a1a2e;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: none !important;
+    }
+
+    .btn--one {
+      background: #FFD93D;
+      box-shadow: 4px 4px 0 #1a1a2e;
+    }
+
+    .btn--two {
+      background: #B794F6;
+      box-shadow: 4px 4px 0 #1a1a2e;
+    }
+
+    .btn--one:hover,
+    .btn--two:hover {
+      box-shadow: 6px 6px 0 #1a1a2e;
+    }
+
+    /* ── Floating emojis ───────────────────────────── */
+    .hero-float {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.25;
+      animation: drift 6s ease-in-out infinite;
+    }
+
+    .hero-float:nth-child(1) { top: 10%; left: 8%; font-size: 2.5rem; animation-delay: 0s; }
+    .hero-float:nth-child(2) { top: 15%; right: 10%; font-size: 2rem; animation-delay: 1.5s; }
+    .hero-float:nth-child(3) { bottom: 18%; left: 12%; font-size: 1.8rem; animation-delay: 3s; }
+    .hero-float:nth-child(4) { bottom: 12%; right: 8%; font-size: 2.2rem; animation-delay: 0.8s; }
+    .hero-float:nth-child(5) { top: 45%; left: 4%; font-size: 1.5rem; animation-delay: 2.2s; }
+    .hero-float:nth-child(6) { top: 50%; right: 5%; font-size: 1.6rem; animation-delay: 4s; }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 3.2rem; }
+      .fight-duck { font-size: 3.5rem; }
+      .fight-vs { width: 65px; height: 65px; }
+      .fight-vs .pan { font-size: 1.2rem; }
+      .fight-vs .vs { font-size: 1rem; }
+
+      .btn-row { flex-direction: column; gap: 1rem; }
+
+      .hero-float:nth-child(5),
+      .hero-float:nth-child(6) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <span class="hero-float">🐤</span>
+    <span class="hero-float">🐦</span>
+    <span class="hero-float">🐤</span>
+    <span class="hero-float">🐦</span>
+    <span class="hero-float">🐤</span>
+    <span class="hero-float">🐦</span>
+
+    <h1 class="hero-title">
+      <span class="word-duck">DUCK</span>
+      <span class="word-duck">DUCK</span><br />
+      <span class="word-fight">FIGHT</span>
+    </h1>
+    <p class="hero-subtitle">Two teams enter. One team quacks louder.</p>
+
+    <div class="fight-card">
+      <a class="fight-duck fight-duck--good" href="team1/index.html">🐤</a>
+      <div class="fight-vs">
+        <span class="pan">🍳</span>
+        <span class="vs">VS</span>
+      </div>
+      <a class="fight-duck fight-duck--evil" href="team2/index.html">🐦</a>
+    </div>
+
+    <div class="btn-row">
+      <!-- ✏️ TEAM 1: Replace "Team 1" with your team name -->
+      <a class="btn btn--one" href="team1/index.html">😇 Team 1 →</a>
+      <!-- ✏️ TEAM 2: Replace "Team 2" with your team name -->
+      <a class="btn btn--two" href="team2/index.html">😈 Team 2 →</a>
+    </div>
+  </section>
+
+</body>
+</html>

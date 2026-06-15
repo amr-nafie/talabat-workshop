@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team 2 — Duck Duck Fight 🦆</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@400;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ── Reset ──────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      font-family: "Space Grotesk", sans-serif;
+      color: #1a1a2e;
+      overflow-x: hidden;
+    }
+
+    /* ── Animations ────────────────────────────────── */
+    @keyframes pop-in {
+      0%   { transform: scale(0) rotate(8deg); opacity: 0; }
+      60%  { transform: scale(1.1) rotate(-2deg); }
+      100% { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    @keyframes slide-up {
+      from { transform: translateY(30px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes feather-fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      20%  { opacity: 0.5; }
+      100% { transform: translateY(20px) rotate(-20deg); opacity: 0.3; }
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) scaleX(-1); }
+      50%      { transform: translateY(-8px) scaleX(-1); }
+    }
+
+    @keyframes waddle {
+      0%, 100% { transform: rotate(0); }
+      25%      { transform: rotate(5deg); }
+      75%      { transform: rotate(-5deg); }
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      gap: 1.2rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 70% 40%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+        linear-gradient(190deg, #F3EEFF 0%, #FFFDF4 50%, #EDE5FF 100%);
+    }
+
+    /* ── Floating feathers ─────────────────────────── */
+    .feather {
+      position: absolute;
+      color: #B794F6;
+      opacity: 0.35;
+      animation: feather-fall 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .feather:nth-child(1) { top: 8%; right: 10%; font-size: 2rem; animation-delay: 0s; }
+    .feather:nth-child(2) { top: 18%; left: 12%; font-size: 1.4rem; animation-delay: 0.8s; }
+    .feather:nth-child(3) { bottom: 18%; right: 15%; font-size: 1.8rem; animation-delay: 1.5s; }
+    .feather:nth-child(4) { bottom: 28%; left: 8%; font-size: 1.2rem; animation-delay: 0.3s; }
+    .feather:nth-child(5) { top: 50%; right: 5%; font-size: 1rem; animation-delay: 2.2s; }
+    .feather:nth-child(6) { top: 38%; left: 5%; font-size: 2.2rem; animation-delay: 1.1s; }
+
+    /* ── Back link ─────────────────────────────────── */
+    .back-link {
+      position: fixed;
+      top: 1rem;
+      left: 1.2rem;
+      color: #1a1a2e;
+      text-decoration: none;
+      font-family: "Bangers", cursive;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 3px solid #1a1a2e;
+      background: #B794F6;
+      box-shadow: 3px 3px 0 #1a1a2e;
+      transition: transform 0.2s, box-shadow 0.2s;
+      z-index: 10;
+    }
+
+    .back-link:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 #1a1a2e;
+    }
+
+    /* ── Bouncing duck mascot ──────────────────────── */
+    .mascot {
+      font-size: 4rem;
+      animation: bob 2s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── Team label ────────────────────────────────── */
+    .team-label {
+      font-family: "Bangers", cursive;
+      font-size: 1.3rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #5B21B6;
+      padding: 0.3rem 1.4rem;
+      border-radius: 999px;
+      border: 3px solid #1a1a2e;
+      background: #F0E6FF;
+      box-shadow: 3px 3px 0 #B794F6;
+      animation: slide-up 0.6s ease-out both;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── Team picture ──────────────────────────────── */
+    .team-pic {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 28px;
+      border: 5px solid #1a1a2e;
+      background: #fff;
+      box-shadow: 8px 8px 0 #B794F6;
+      animation: pop-in 0.7s ease-out both 0.2s;
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s;
+    }
+
+    .team-pic:hover {
+      transform: scale(1.05) rotate(-3deg);
+    }
+
+    /* ── Team name ─────────────────────────────────── */
+    .team-name {
+      font-family: "Bangers", cursive;
+      font-size: 5rem;
+      color: #6D28D9;
+      line-height: 1;
+      letter-spacing: 5px;
+      text-shadow: 4px 4px 0 #D8B4FE;
+      animation: pop-in 0.7s ease-out both 0.4s;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── Slogan (speech bubble) ────────────────────── */
+    .team-slogan {
+      position: relative;
+      z-index: 2;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-style: italic;
+      color: #1a1a2e;
+      background: #fff;
+      padding: 1rem 1.8rem;
+      border-radius: 24px;
+      border: 4px solid #1a1a2e;
+      box-shadow: 4px 4px 0 #B794F6;
+      max-width: 400px;
+      animation: slide-up 0.6s ease-out both 0.6s;
+    }
+
+    .team-slogan::before {
+      content: "";
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      margin-left: -10px;
+      width: 0; height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 16px solid #1a1a2e;
+    }
+
+    .team-slogan::after {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      margin-left: -7px;
+      width: 0; height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 11px solid #fff;
+    }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 768px) {
+      .team-name { font-size: 3rem; }
+      .team-pic  { width: 220px; height: 220px; }
+      .team-slogan { font-size: 1rem; padding: 0.8rem 1.2rem; }
+      .mascot { font-size: 3rem; }
+      .feather:nth-child(5), .feather:nth-child(6) { display: none; }
+    }
+
+    /* 🎨 Feel free to ask Claude to restyle this page however you like! */
+  </style>
+</head>
+<body>
+
+  <a class="back-link" href="../index.html">← Back</a>
+
+  <div class="hero">
+    <!-- floating ducks -->
+    <span class="feather">🐦</span>
+    <span class="feather">🐦</span>
+    <span class="feather">🐦</span>
+    <span class="feather">🐦</span>
+    <span class="feather">🐦</span>
+    <span class="feather">🐦</span>
+
+    <div class="mascot">🐦</div>
+    <p class="team-label">😈 Team 2</p>
+
+    <!-- ✏️ Drop your AI-generated image into this folder as picture.png -->
+    <img
+      class="team-pic"
+      src="./picture.png"
+      alt="Team 2 picture"
+    />
+
+    <!-- ✏️ Replace "Team 2" with your team name (also update this in the homepage!) -->
+    <h1 class="team-name">Team 2</h1>
+
+    <!-- ✏️ Replace this slogan with something fun -->
+    <p class="team-slogan">We didn't choose the duck life. 😈</p>
+  </div>
+
+  <!-- 🎨 Feel free to ask Claude to restyle this page however you like! -->
+
+</body>
+</html>
