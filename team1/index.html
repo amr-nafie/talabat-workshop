@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team 1 — Duck Duck Fight 🦆</title>
+  <title>KakSquad — Duck Duck Fight 🦆</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -50,7 +50,26 @@
       75%      { transform: rotate(5deg); }
     }
 
-    /* ── Hero ──────────────────────────────────────── */
+    @keyframes ripple {
+      0%   { transform: scale(0.8); opacity: 0.6; }
+      50%  { transform: scale(1.2); opacity: 0.3; }
+      100% { transform: scale(0.8); opacity: 0.6; }
+    }
+
+    @keyframes water-shimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes lily-float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25%      { transform: translate(4px, -3px) rotate(2deg); }
+      50%      { transform: translate(-2px, -5px) rotate(-1deg); }
+      75%      { transform: translate(-4px, -2px) rotate(1deg); }
+    }
+
+    /* ── Hero — Water Pond ────────────────────────── */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -61,34 +80,73 @@
       padding: 4rem 2rem;
       gap: 1.2rem;
       position: relative;
+      overflow: hidden;
       background:
-        radial-gradient(ellipse at 30% 40%, rgba(255, 217, 61, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 80%, rgba(255, 217, 61, 0.15) 0%, transparent 50%),
-        linear-gradient(170deg, #FFF9E0 0%, #FFFDF4 50%, #FFF4CC 100%);
+        radial-gradient(ellipse at 50% 30%, rgba(144, 213, 196, 0.4) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 70%, rgba(72, 166, 145, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 60%, rgba(100, 190, 170, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 90%, rgba(45, 120, 100, 0.3) 0%, transparent 40%),
+        linear-gradient(180deg, #B5E8D5 0%, #7ECFB3 20%, #5ABFA0 40%, #3EA98A 60%, #2D8A70 80%, #1E6B55 100%);
     }
 
-    /* ── Floating feathers ─────────────────────────── */
+    /* Water surface shimmer overlay */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.06) 20px,
+          transparent 40px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          rgba(255, 255, 255, 0.04) 30px,
+          transparent 60px
+        );
+      background-size: 200% 200%;
+      animation: water-shimmer 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Subtle light caustics effect */
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 25% 35%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
+        radial-gradient(ellipse at 75% 55%, rgba(255, 255, 255, 0.1) 0%, transparent 25%),
+        radial-gradient(ellipse at 40% 75%, rgba(255, 255, 255, 0.08) 0%, transparent 20%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Floating pond elements ───────────────────── */
     .feather {
       position: absolute;
-      color: #E6C200;
-      opacity: 0.35;
-      animation: feather-fall 4s ease-in-out infinite;
+      opacity: 0.5;
       pointer-events: none;
       z-index: 1;
     }
-    .feather:nth-child(1) { top: 8%; left: 10%; font-size: 2rem; animation-delay: 0s; }
-    .feather:nth-child(2) { top: 18%; right: 12%; font-size: 1.4rem; animation-delay: 0.8s; }
-    .feather:nth-child(3) { bottom: 18%; left: 15%; font-size: 1.8rem; animation-delay: 1.5s; }
-    .feather:nth-child(4) { bottom: 28%; right: 8%; font-size: 1.2rem; animation-delay: 0.3s; }
-    .feather:nth-child(5) { top: 50%; left: 5%; font-size: 1rem; animation-delay: 2.2s; }
-    .feather:nth-child(6) { top: 38%; right: 5%; font-size: 2.2rem; animation-delay: 1.1s; }
+    /* Lily pads and ripples */
+    .feather:nth-child(1) { top: 12%; left: 8%; font-size: 2.5rem; animation: lily-float 5s ease-in-out infinite; }
+    .feather:nth-child(2) { top: 22%; right: 10%; font-size: 2rem; animation: lily-float 6s ease-in-out infinite 1s; }
+    .feather:nth-child(3) { bottom: 15%; left: 12%; font-size: 2.2rem; animation: lily-float 5.5s ease-in-out infinite 2s; }
+    .feather:nth-child(4) { bottom: 25%; right: 6%; font-size: 1.8rem; animation: ripple 3s ease-in-out infinite 0.5s; opacity: 0.35; }
+    .feather:nth-child(5) { top: 55%; left: 4%; font-size: 1.5rem; animation: ripple 4s ease-in-out infinite 1.5s; opacity: 0.3; }
+    .feather:nth-child(6) { top: 40%; right: 4%; font-size: 2rem; animation: lily-float 7s ease-in-out infinite 0.8s; }
 
     /* ── Back link ─────────────────────────────────── */
     .back-link {
       position: fixed;
       top: 1rem;
       left: 1.2rem;
-      color: #1a1a2e;
+      color: #fff;
       text-decoration: none;
       font-family: "Bangers", cursive;
       font-size: 1.1rem;
@@ -96,7 +154,7 @@
       padding: 0.4rem 1rem;
       border-radius: 999px;
       border: 3px solid #1a1a2e;
-      background: #FFD93D;
+      background: #2D8A70;
       box-shadow: 3px 3px 0 #1a1a2e;
       transition: transform 0.2s, box-shadow 0.2s;
       z-index: 10;
@@ -121,12 +179,12 @@
       font-size: 1.3rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: #8B6914;
+      color: #1a5c47;
       padding: 0.3rem 1.4rem;
       border-radius: 999px;
       border: 3px solid #1a1a2e;
-      background: #FFF4CC;
-      box-shadow: 3px 3px 0 #E6C200;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 3px 3px 0 #2D8A70;
       animation: slide-up 0.6s ease-out both;
       position: relative;
       z-index: 2;
@@ -140,7 +198,7 @@
       border-radius: 28px;
       border: 5px solid #1a1a2e;
       background: #fff;
-      box-shadow: 8px 8px 0 #FFD93D;
+      box-shadow: 8px 8px 0 #3EA98A;
       animation: pop-in 0.7s ease-out both 0.2s;
       position: relative;
       z-index: 2;
@@ -155,10 +213,10 @@
     .team-name {
       font-family: "Bangers", cursive;
       font-size: 5rem;
-      color: #B8860B;
+      color: #fff;
       line-height: 1;
       letter-spacing: 5px;
-      text-shadow: 4px 4px 0 #FFD93D;
+      text-shadow: 4px 4px 0 #1a5c47, 0 0 20px rgba(45, 138, 112, 0.4);
       animation: pop-in 0.7s ease-out both 0.4s;
       position: relative;
       z-index: 2;
@@ -176,7 +234,7 @@
       padding: 1rem 1.8rem;
       border-radius: 24px;
       border: 4px solid #1a1a2e;
-      box-shadow: 4px 4px 0 #E6C200;
+      box-shadow: 4px 4px 0 #3EA98A;
       max-width: 400px;
       animation: slide-up 0.6s ease-out both 0.6s;
     }
@@ -214,6 +272,52 @@
       .feather:nth-child(5), .feather:nth-child(6) { display: none; }
     }
 
+    /* ── Sound toggle button ─────────────────────── */
+    .sound-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1.2rem;
+      font-size: 1.6rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid #1a1a2e;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 3px 3px 0 #2D8A70;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      line-height: 1;
+    }
+    .sound-toggle:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 #2D8A70;
+    }
+
+    /* Click-to-start overlay */
+    .sound-start-overlay {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #1a5c47;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0.6rem 1.4rem;
+      border-radius: 999px;
+      border: 3px solid #1a1a2e;
+      box-shadow: 3px 3px 0 #2D8A70;
+      cursor: pointer;
+      z-index: 10;
+      animation: slide-up 0.6s ease-out both 1s;
+      transition: opacity 0.4s;
+    }
+
     /* 🎨 Feel free to ask Claude to restyle this page however you like! */
   </style>
 </head>
@@ -222,30 +326,118 @@
   <a class="back-link" href="../index.html">← Back</a>
 
   <div class="hero">
-    <!-- floating ducks -->
-    <span class="feather">🐤</span>
-    <span class="feather">🐤</span>
-    <span class="feather">🐤</span>
-    <span class="feather">🐤</span>
-    <span class="feather">🐤</span>
-    <span class="feather">🐤</span>
+    <!-- floating pond elements -->
+    <span class="feather">🪷</span>
+    <span class="feather">🍃</span>
+    <span class="feather">🪷</span>
+    <span class="feather">💧</span>
+    <span class="feather">💧</span>
+    <span class="feather">🍃</span>
 
-    <div class="mascot">🐤</div>
-    <p class="team-label">😇 Team 1</p>
+    <div class="mascot">🦆</div>
+    <p class="team-label">😇 KakSquad</p>
 
     <!-- ✏️ Drop your AI-generated image into this folder as picture.png -->
     <img
       class="team-pic"
-      src="./picture.png"
-      alt="Team 1 picture"
+      src="./new picture.png"
+      alt="KakSquad picture"
     />
 
     <!-- ✏️ Replace "Team 1" with your team name (also update this in the homepage!) -->
-    <h1 class="team-name">Team 1</h1>
+    <h1 class="team-name">KakSquad</h1>
 
     <!-- ✏️ Replace this slogan with something fun -->
-    <p class="team-slogan">Quack quack, we're on track. 💛</p>
+    <p class="team-slogan">All quack, no slack 🦆</p>
   </div>
+
+  <!-- Sound toggle + start prompt -->
+  <button class="sound-toggle" id="soundToggle" title="Mute / Unmute">🔇</button>
+  <div class="sound-start-overlay" id="soundStart">🦆 Click anywhere to start the quack track</div>
+
+  <script>
+    (function () {
+      let ctx, playing = false, started = false, muted = false;
+      let quackTimer = null;
+      const btn = document.getElementById("soundToggle");
+      const overlay = document.getElementById("soundStart");
+
+      /* ── Synthesise a single quack ────────────────── */
+      function quack() {
+        if (!ctx || muted) return;
+        const now = ctx.currentTime;
+        const duration = 0.15 + Math.random() * 0.1;
+
+        // Main voice — nasally sawtooth
+        const osc = ctx.createOscillator();
+        osc.type = "sawtooth";
+        const baseFreq = 700 + Math.random() * 400;
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.55, now + duration);
+
+        // Nasal formant
+        const bandpass = ctx.createBiquadFilter();
+        bandpass.type = "bandpass";
+        bandpass.frequency.value = 1800 + Math.random() * 400;
+        bandpass.Q.value = 5;
+
+        // Envelope
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.18, now + 0.02);
+        gain.gain.linearRampToValueAtTime(0.15, now + duration * 0.5);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+        osc.connect(bandpass);
+        bandpass.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + duration + 0.05);
+      }
+
+      /* ── Schedule a quack pattern ─────────────────── */
+      function scheduleQuacks() {
+        if (muted) return;
+        // 1–3 rapid quacks
+        const count = 1 + Math.floor(Math.random() * 3);
+        for (let i = 0; i < count; i++) {
+          setTimeout(quack, i * 180);
+        }
+        // Next burst in 2–6 seconds
+        const next = 2000 + Math.random() * 4000;
+        quackTimer = setTimeout(scheduleQuacks, next);
+      }
+
+      /* ── Start audio (needs user gesture) ─────────── */
+      function startAudio() {
+        if (started) return;
+        started = true;
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        playing = true;
+        btn.textContent = "🔊";
+        overlay.style.opacity = "0";
+        setTimeout(function () { overlay.style.display = "none"; }, 400);
+        scheduleQuacks();
+      }
+
+      /* ── Toggle mute ──────────────────────────────── */
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (!started) { startAudio(); return; }
+        muted = !muted;
+        btn.textContent = muted ? "🔇" : "🔊";
+        if (muted) {
+          clearTimeout(quackTimer);
+        } else {
+          scheduleQuacks();
+        }
+      });
+
+      /* ── Click anywhere to start ──────────────────── */
+      document.addEventListener("click", startAudio, { once: true });
+    })();
+  </script>
 
   <!-- 🎨 Feel free to ask Claude to restyle this page however you like! -->
 
