@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team 2 — Duck Duck Fight 🦆</title>
+  <title>Fowl Play — Duck Duck Fight 🦆</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -214,6 +214,114 @@
       .feather:nth-child(5), .feather:nth-child(6) { display: none; }
     }
 
+    /* ── Dark mode (activated by Surprise button) ── */
+    .hero.dark-mode {
+      background:
+        radial-gradient(ellipse at 70% 40%, rgba(88, 28, 135, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, rgba(59, 7, 100, 0.3) 0%, transparent 50%),
+        linear-gradient(190deg, #1a0533 0%, #2d1055 50%, #0f0520 100%);
+      color: #e9d5ff;
+      transition: background 1s ease, color 1s ease;
+    }
+
+    .hero.dark-mode .team-name {
+      color: #c084fc;
+      text-shadow: 4px 4px 0 #581c87;
+    }
+
+    .hero.dark-mode .team-label {
+      background: #2d1055;
+      color: #c084fc;
+      border-color: #7c3aed;
+      box-shadow: 3px 3px 0 #581c87;
+    }
+
+    .hero.dark-mode .team-slogan {
+      background: #1a0533;
+      color: #e9d5ff;
+      border-color: #7c3aed;
+      box-shadow: 4px 4px 0 #581c87;
+    }
+
+    .hero.dark-mode .team-slogan::before {
+      border-bottom-color: #7c3aed;
+    }
+
+    .hero.dark-mode .team-slogan::after {
+      border-bottom-color: #1a0533;
+    }
+
+    .hero.dark-mode .team-pic {
+      border-color: #7c3aed;
+      box-shadow: 8px 8px 0 #581c87;
+    }
+
+    /* ── Surprise button ──────────────────────────── */
+    .surprise-btn {
+      font-family: "Bangers", cursive;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      color: #1a1a2e;
+      background: #B794F6;
+      border: 3px solid #1a1a2e;
+      border-radius: 999px;
+      padding: 0.6rem 2rem;
+      box-shadow: 4px 4px 0 #1a1a2e;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 10;
+    }
+
+    .surprise-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #1a1a2e;
+    }
+
+    /* ── Game button ──────────────────────────────── */
+    .game-btn {
+      display: inline-block;
+      font-family: "Bangers", cursive;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: #1a1a2e;
+      background: #fff;
+      text-decoration: none;
+      border: 4px solid #1a1a2e;
+      border-radius: 999px;
+      padding: 0.7rem 2.2rem;
+      box-shadow: 5px 5px 0 #7c3aed;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      z-index: 2;
+      animation: slide-up 0.6s ease-out both 0.8s;
+    }
+
+    .game-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 #7c3aed;
+    }
+
+    .game-btn:active {
+      transform: translate(0, 0);
+      box-shadow: 3px 3px 0 #7c3aed;
+    }
+
+    /* Dark mode game button */
+    .hero.dark-mode .game-btn {
+      background: #2d1055;
+      color: #e9d5ff;
+      border-color: #7c3aed;
+      box-shadow: 5px 5px 0 #581c87;
+    }
+
+    .hero.dark-mode .game-btn:hover {
+      box-shadow: 7px 7px 0 #581c87;
+    }
+
     /* 🎨 Feel free to ask Claude to restyle this page however you like! */
   </style>
 </head>
@@ -231,7 +339,7 @@
     <span class="feather">🐦</span>
 
     <div class="mascot">🐦</div>
-    <p class="team-label">😈 Team 2</p>
+    <p class="team-label">😈 Fowl Play</p>
 
     <!-- ✏️ Drop your AI-generated image into this folder as picture.png -->
     <img
@@ -241,13 +349,21 @@
     />
 
     <!-- ✏️ Replace "Team 2" with your team name (also update this in the homepage!) -->
-    <h1 class="team-name">Team 2</h1>
+    <h1 class="team-name">Fowl Play</h1>
 
     <!-- ✏️ Replace this slogan with something fun -->
-    <p class="team-slogan">We didn't choose the duck life. 😈</p>
+    <p class="team-slogan">We don't play fair, we play fowl. 😈</p>
+
+    <a class="game-btn" href="game.html">🎮 Play Game →</a>
   </div>
 
   <!-- 🎨 Feel free to ask Claude to restyle this page however you like! -->
+
+  <!-- 🎵 Suspense background music -->
+  <audio id="suspense-audio" loop>
+    <source src="./suspense.mp3" type="audio/mpeg" />
+  </audio>
+  <button class="surprise-btn" onclick="document.getElementById('suspense-audio').play(); document.querySelector('.hero').classList.add('dark-mode');">🎵 Surprise</button>
 
 </body>
 </html>

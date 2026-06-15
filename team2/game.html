@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fowl Play Game — Duck Duck Fight 🦆</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@400;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ── Reset ──────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      font-family: "Space Grotesk", sans-serif;
+      color: #1a1a2e;
+      overflow: hidden;
+    }
+
+    /* ── Page background — purple theme ──────────── */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 70% 40%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+        linear-gradient(190deg, #F3EEFF 0%, #FFFDF4 50%, #EDE5FF 100%);
+    }
+
+    /* ── Back link ─────────────────────────────────── */
+    .back-link {
+      position: fixed;
+      top: 1rem;
+      left: 1.2rem;
+      color: #1a1a2e;
+      text-decoration: none;
+      font-family: "Bangers", cursive;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 3px solid #1a1a2e;
+      background: #B794F6;
+      box-shadow: 3px 3px 0 #1a1a2e;
+      transition: transform 0.2s, box-shadow 0.2s;
+      z-index: 10;
+    }
+
+    .back-link:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 #1a1a2e;
+    }
+
+    /* ── Title ──────────────────────────────────────── */
+    .game-title {
+      font-family: "Bangers", cursive;
+      font-size: 2.5rem;
+      color: #6D28D9;
+      letter-spacing: 4px;
+      text-shadow: 3px 3px 0 #D8B4FE;
+    }
+
+    /* ── Game container ────────────────────────────── */
+    .game-container {
+      width: 800px;
+      height: 500px;
+      max-width: 90vw;
+      max-height: 60vh;
+      background: #fff;
+      border: 5px solid #1a1a2e;
+      border-radius: 20px;
+      box-shadow: 8px 8px 0 #B794F6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-container canvas {
+      display: block;
+      border-radius: 15px;
+    }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 768px) {
+      .game-title { font-size: 1.8rem; }
+      .game-container { height: 400px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back-link" href="index.html">← Back to Fowl Play</a>
+
+  <div class="page">
+    <h1 class="game-title">🐦 Fowl Play Game</h1>
+
+    <div class="game-container">
+      <canvas id="gameCanvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // ── Set up canvas to fill the game container ──
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      const container = document.querySelector('.game-container');
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // ── Placeholder text until game is built ──
+    function drawPlaceholder() {
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = '48px serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🎮', canvas.width / 2, canvas.height / 2 - 20);
+
+      ctx.font = '600 24px "Bangers", cursive';
+      ctx.fillStyle = '#ccc';
+      ctx.letterSpacing = '2px';
+      ctx.fillText('Game goes here', canvas.width / 2, canvas.height / 2 + 30);
+    }
+
+    drawPlaceholder();
+
+    // 🎮 Game code goes below this line!
+    // Teams will prompt Claude to build their Angry Birds game here.
+
+  </script>
+
+</body>
+</html>
